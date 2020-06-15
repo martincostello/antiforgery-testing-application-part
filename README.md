@@ -4,7 +4,7 @@
 
 ## Introduction
 
-An example application that demonstrates using [ASP.NET Core application parts](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts "Share controllers, views, Razor Pages and more with Application Parts") for easier integration testing of HTTP resources that are protected by the [anti-forgery](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery "") features of ASP.NET Core, such as `[ValidateAntiforgeryToken]`.
+An example application that demonstrates using [ASP.NET Core application parts](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts "Share controllers, views, Razor Pages and more with Application Parts") for easier integration testing of HTTP resources that are protected by the [anti-forgery](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery "Prevent Cross-Site Request Forgery (XSRF/CSRF) attacks in ASP.NET Core") features of ASP.NET Core, such as `[ValidateAntiforgeryToken]`.
 
 ## Feedback
 
