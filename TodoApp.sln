@@ -1,0 +1,86 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CFDFAA9D-F0BA-4E96-BBD9-5710093A41C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F729958A-AB1B-4722-8CE3-2F64B66EF70B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6534D094-B61A-436E-8A50-72BBE9512D7C}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.vsconfig = .vsconfig
+		build.ps1 = build.ps1
+		Directory.Build.props = Directory.Build.props
+		global.json = global.json
+		LICENSE = LICENSE
+		NuGet.config = NuGet.config
+		README.md = README.md
+		stylecop.json = stylecop.json
+		TodoApp.ruleset = TodoApp.ruleset
+		update-dotnet-sdk.ps1 = update-dotnet-sdk.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{16757E02-43CA-497C-A82B-D4C494187C8D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\CONTRIBUTING.md = .github\CONTRIBUTING.md
+		.github\dependabot.yml = .github\dependabot.yml
+		.github\FUNDING.yml = .github\FUNDING.yml
+		.github\ISSUE_TEMPLATE.md = .github\ISSUE_TEMPLATE.md
+		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{7882B8AC-66E6-4C97-A41F-C69294C668A4}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\bug_report.md = .github\ISSUE_TEMPLATE\bug_report.md
+		.github\ISSUE_TEMPLATE\feature_request.md = .github\ISSUE_TEMPLATE\feature_request.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{D249F6A2-7BCA-40BE-9597-7EFA2D67D11B}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\update-dotnet-sdk.yml = .github\workflows\update-dotnet-sdk.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".vscode", ".vscode", "{AAC320F3-C7F1-43D6-9560-FEA503AB66E1}"
+	ProjectSection(SolutionItems) = preProject
+		.vscode\launch.json = .vscode\launch.json
+		.vscode\tasks.json = .vscode\tasks.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp", "src\TodoApp\TodoApp.csproj", "{226EED13-9AD3-4F24-B8E1-1623F4EF247B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.Tests", "tests\TodoApp.Tests\TodoApp.Tests.csproj", "{F105DDD0-F061-43E9-94D8-3DD23771CC8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{226EED13-9AD3-4F24-B8E1-1623F4EF247B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{226EED13-9AD3-4F24-B8E1-1623F4EF247B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{226EED13-9AD3-4F24-B8E1-1623F4EF247B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{226EED13-9AD3-4F24-B8E1-1623F4EF247B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F105DDD0-F061-43E9-94D8-3DD23771CC8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F105DDD0-F061-43E9-94D8-3DD23771CC8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F105DDD0-F061-43E9-94D8-3DD23771CC8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F105DDD0-F061-43E9-94D8-3DD23771CC8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{16757E02-43CA-497C-A82B-D4C494187C8D} = {6534D094-B61A-436E-8A50-72BBE9512D7C}
+		{7882B8AC-66E6-4C97-A41F-C69294C668A4} = {16757E02-43CA-497C-A82B-D4C494187C8D}
+		{D249F6A2-7BCA-40BE-9597-7EFA2D67D11B} = {16757E02-43CA-497C-A82B-D4C494187C8D}
+		{AAC320F3-C7F1-43D6-9560-FEA503AB66E1} = {6534D094-B61A-436E-8A50-72BBE9512D7C}
+		{226EED13-9AD3-4F24-B8E1-1623F4EF247B} = {CFDFAA9D-F0BA-4E96-BBD9-5710093A41C2}
+		{F105DDD0-F061-43E9-94D8-3DD23771CC8A} = {F729958A-AB1B-4722-8CE3-2F64B66EF70B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB9D41E4-C9FD-49CC-9196-31D59B9A4157}
+	EndGlobalSection
+EndGlobal
