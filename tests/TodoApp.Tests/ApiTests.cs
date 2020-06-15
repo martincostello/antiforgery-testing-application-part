@@ -47,7 +47,7 @@ namespace TodoApp
             // Act - Create a new item
             using var response = await httpClient.PostAsync("home/additem", content);
 
-            // Assert - The item was created
+            // Assert - The request failed due to missing CSRF tokens
             response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
         }
 
@@ -77,7 +77,7 @@ namespace TodoApp
                 Fixture.Server.BaseAddress,
                 new Cookie(tokens.CookieName, tokens.CookieValue));
 
-            // Create an HTTP client and add the CSRF header
+            // Create an HTTP client and add the CSRF cookie
             using var httpClient = Fixture.CreateDefaultClient(cookieHandler);
 
             // Create form content to create a new item with the CSRF parameter added
@@ -87,13 +87,37 @@ namespace TodoApp
                 ["text"] = "Buy milk",
             };
 
-            using var content = new FormUrlEncodedContent(form);
-
             // Act - Create a new item
+            using var content = new FormUrlEncodedContent(form);
             using var response = await httpClient.PostAsync("home/additem", content);
 
             // Assert - The item was created
             response.StatusCode.ShouldBe(HttpStatusCode.Redirect);
+        }
+
+        [Fact]
+        public async Task Can_Create_Todo_Item_With_Json()
+        {
+            // Arrange - Get valid CSRF tokens and parameter names from the server
+            AntiforgeryTokens tokens = await Fixture.GetAntiforgeryTokensAsync();
+
+            // Configure a handler with the CSRF cookie
+            using var cookieHandler = new CookieContainerHandler();
+            cookieHandler.Container.Add(
+                Fixture.Server.BaseAddress,
+                new Cookie(tokens.CookieName, tokens.CookieValue));
+
+            // Create an HTTP client and add the CSRF header
+            using var httpClient = Fixture.CreateDefaultClient(cookieHandler);
+            httpClient.DefaultRequestHeaders.Add(tokens.HeaderName, tokens.RequestToken);
+
+            var client = RestService.For<ITodoClient>(httpClient);
+
+            // Act - Create a new item
+            using var response = await client.AddAsync("Buy bread");
+
+            // Assert - The item was created
+            response.IsSuccessStatusCode.ShouldBeTrue();
         }
 
         [Fact]
