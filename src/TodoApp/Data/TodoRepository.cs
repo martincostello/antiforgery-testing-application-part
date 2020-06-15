@@ -88,6 +88,12 @@ namespace TodoApp.Data
         }
 
         /// <inheritdoc />
+        public async Task<TodoItem?> GetItemAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Items!.FindAsync(new object[] { id }, cancellationToken);
+        }
+
+        /// <inheritdoc />
         public async Task<IList<TodoItem>> GetItemsAsync(CancellationToken cancellationToken = default)
         {
             return await _context.Items

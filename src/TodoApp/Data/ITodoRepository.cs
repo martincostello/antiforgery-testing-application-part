@@ -50,6 +50,17 @@ namespace TodoApp.Data
         Task<bool> DeleteItemAsync(Guid id, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Returns the item with the specified Id, if any, as an asynchronous operation.
+        /// </summary>
+        /// <param name="id">The id of the item to get.</param>
+        /// <param name="cancellationToken">The optional cancellation token to use.</param>
+        /// <returns>
+        /// A <see cref="Task{TResult}"/> representing the asynchronous
+        /// operation to return the items with the specified Id, if found; otherwise <see langword="null"/>.
+        /// </returns>
+        Task<TodoItem?> GetItemAsync(Guid id, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Returns all items as an asynchronous operation.
         /// </summary>
         /// <param name="cancellationToken">The optional cancellation token to use.</param>

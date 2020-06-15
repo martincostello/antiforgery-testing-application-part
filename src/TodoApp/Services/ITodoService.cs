@@ -18,9 +18,10 @@ namespace TodoApp.Services
         /// <param name="text">The text of the item to add.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns>
-        /// A <see cref="Task"/> representing the asynchronous operation to add the new item.
+        /// A <see cref="Task"/> representing the asynchronous operation to
+        /// add the new item which returns the Id of the new item.
         /// </returns>
-        Task AddItemAsync(string text, CancellationToken cancellationToken);
+        Task<string> AddItemAsync(string text, CancellationToken cancellationToken);
 
         /// <summary>
         /// Marks an item as completed as an asynchronous operation.
@@ -46,6 +47,17 @@ namespace TodoApp.Services
         /// otherwise <see langword="false"/> if an item with the specified Id cannot be found.
         /// </returns>
         Task<bool> DeleteItemAsync(string id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns the TODO item with the specfied Id as an asynchronous operation.
+        /// </summary>
+        /// <param name="id">The id of the item to retrieve.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <returns>
+        /// A <see cref="Task{TResult}"/> representing the asynchronous operation
+        /// to get the specified TODO item, or <see langword="null"/> if not found.
+        /// </returns>
+        Task<TodoItemModel?> GetAsync(string id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns all the TODO items as an asynchronous operation.

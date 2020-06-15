@@ -1,6 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <IsPackable>false</IsPackable>
+    <NoWarn>CA1303;CA1707;CA2007;CA2234;SA1600;$(NoWarn)</NoWarn>
     <RootNamespace>TodoApp</RootNamespace>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
@@ -9,6 +10,7 @@
     <PackageReference Include="MartinCostello.Logging.XUnit" Version="0.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="Refit" Version="5.1.67" />
     <PackageReference Include="Shouldly" Version="3.0.2" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2" />
@@ -18,5 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\TodoApp\TodoApp.csproj" />
+  </ItemGroup>
+  <!--
+    Add [ApplicationPart("TodoApp.Tests")] to the assembly so the controller is discovered.
+  -->
+  <ItemGroup>
+    <AssemblyAttribute Include="Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartAttribute">
+      <_Parameter1>TodoApp.Tests</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 </Project>

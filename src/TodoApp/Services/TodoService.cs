@@ -28,21 +28,23 @@ namespace TodoApp.Services
         }
 
         /// <inheritdoc />
-        public Task AddItemAsync(string text, CancellationToken cancellationToken)
+        public async Task<string> AddItemAsync(string text, CancellationToken cancellationToken)
         {
-            return _repository.AddItemAsync(text, cancellationToken);
+            TodoItem item = await _repository.AddItemAsync(text, cancellationToken);
+
+            return item.Id.ToString();
         }
 
         /// <inheritdoc />
-        public Task<bool?> CompleteItemAsync(string id, CancellationToken cancellationToken)
+        public async Task<bool?> CompleteItemAsync(string id, CancellationToken cancellationToken)
         {
-            return _repository.CompleteItemAsync(new Guid(id), cancellationToken);
+            return await _repository.CompleteItemAsync(new Guid(id), cancellationToken);
         }
 
         /// <inheritdoc />
-        public Task<bool> DeleteItemAsync(string id, CancellationToken cancellationToken)
+        public async Task<bool> DeleteItemAsync(string id, CancellationToken cancellationToken)
         {
-            return _repository.DeleteItemAsync(new Guid(id), cancellationToken);
+            return await _repository.DeleteItemAsync(new Guid(id), cancellationToken);
         }
 
         /// <inheritdoc />
@@ -58,6 +60,19 @@ namespace TodoApp.Services
             }
 
             return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<TodoItemModel?> GetAsync(string id, CancellationToken cancellationToken)
+        {
+            TodoItem? item = await _repository.GetItemAsync(new Guid(id), cancellationToken);
+
+            if (item == null)
+            {
+                return null;
+            }
+
+            return MapItem(item);
         }
 
         private static TodoItemModel MapItem(TodoItem item)
