@@ -4,11 +4,11 @@
 
 ## Introduction
 
-An example application that demonstrates using [ASP.NET Core application parts](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts "Share controllers, views, Razor Pages and more with Application Parts") for easier integration testing of HTTP resources that are protected by the [anti-forgery](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery "Prevent Cross-Site Request Forgery (XSRF/CSRF) attacks in ASP.NET Core") features of ASP.NET Core, such as `[ValidateAntiforgeryToken]`.
+An example application that demonstrates using [ASP.NET Core Application Parts](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts "Share controllers, views, Razor Pages and more with Application Parts") for easier integration testing of HTTP resources that are protected by the [anti-forgery](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery "Prevent Cross-Site Request Forgery (XSRF/CSRF) attacks in ASP.NET Core") features of ASP.NET Core, such as `[ValidateAntiforgeryToken]`.
 
 ## How It Works
 
-To avoid the danger of having unsafe code that returns valid CSRF tokens in the application itself, instead we can use application parts to inject additional functionality into the server at runtime when running integration tests using [`WebApplicationFactory<TEntryPoint>`](https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests "Integration tests in ASP.NET Core").
+To avoid the danger of having unsafe code that returns valid CSRF tokens in the application itself, instead we can use Application Parts to inject additional functionality into the server at runtime when running integration tests using [`WebApplicationFactory<TEntryPoint>`](https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests "Integration tests in ASP.NET Core").
 
 The test project contains the [`AntiforgeryTokenController`](https://github.com/martincostello/antiforgery-testing-application-part/blob/main/tests/TodoApp.Tests/AntiforgeryTokenController.cs). This contains an [HTTP GET resource](https://github.com/martincostello/antiforgery-testing-application-part/blob/f8985fe1bbaa800cf73bc62bb85949c1c0a8a698/tests/TodoApp.Tests/AntiforgeryTokenController.cs#L39-L65) that uses the Antiforgery features to return a JSON payload containing valid CSRF tokens and the relevant cookie/form/header names to validate requests:
 
@@ -32,7 +32,7 @@ public IActionResult GetAntiforgeryTokens(
 }
 ```
 
-This is then configured as an application part by the [`ConfigureAntiforgeryTokenResource()`](https://github.com/martincostello/antiforgery-testing-application-part/blob/f8985fe1bbaa800cf73bc62bb85949c1c0a8a698/tests/TodoApp.Tests/IWebHostBuilderExtensions.cs#L26-L39) method, which is [registered with the test server](https://github.com/martincostello/antiforgery-testing-application-part/blob/f8985fe1bbaa800cf73bc62bb85949c1c0a8a698/tests/TodoApp.Tests/TestServerFixture.cs#L82):
+This is then configured as an Application Part by the [`ConfigureAntiforgeryTokenResource()`](https://github.com/martincostello/antiforgery-testing-application-part/blob/f8985fe1bbaa800cf73bc62bb85949c1c0a8a698/tests/TodoApp.Tests/IWebHostBuilderExtensions.cs#L26-L39) method, which is [registered with the test server](https://github.com/martincostello/antiforgery-testing-application-part/blob/f8985fe1bbaa800cf73bc62bb85949c1c0a8a698/tests/TodoApp.Tests/TestServerFixture.cs#L82):
 
 ```csharp
 protected override void ConfigureWebHost(IWebHostBuilder builder)
