@@ -13,6 +13,7 @@ namespace TodoApp
     /// A class representing a controller for an HTTP GET resource that returns
     /// valid CSRF tokens for use in integration tests. This class cannot be inherited.
     /// </summary>
+    [ApiExplorerSettings(IgnoreApi = true)]
     public sealed class AntiforgeryTokenController : Controller
     {
         /// <summary>
@@ -35,7 +36,7 @@ namespace TodoApp
         /// </returns>
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json, Type = typeof(AntiforgeryTokens))]
-        [Route(GetUrl)]
+        [Route(GetUrl, Name = "GetAntiforgeryTokens")]
         public IActionResult GetAntiforgeryTokens(
             [FromServices] IAntiforgery antiforgery,
             [FromServices] IOptions<AntiforgeryOptions> options)
