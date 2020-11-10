@@ -55,11 +55,11 @@ namespace TodoApp
 
             var model = new AntiforgeryTokens()
             {
-                CookieName = options.Value.Cookie.Name,
-                CookieValue = tokens.CookieToken,
+                CookieName = options.Value!.Cookie!.Name!,
+                CookieValue = tokens.CookieToken!,
                 FormFieldName = options.Value.FormFieldName,
-                HeaderName = tokens.HeaderName,
-                RequestToken = tokens.RequestToken,
+                HeaderName = tokens.HeaderName!,
+                RequestToken = tokens.RequestToken!,
             };
 
             return Json(model);

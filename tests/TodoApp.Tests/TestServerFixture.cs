@@ -56,11 +56,11 @@ namespace TodoApp
             using var httpClient = httpClientFactory?.Invoke() ?? CreateClient();
             using var response = await httpClient.GetAsync(AntiforgeryTokenController.GetTokensUri, cancellationToken).ConfigureAwait(false);
 
-            string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            string json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
 
-            return JsonSerializer.Deserialize<AntiforgeryTokens>(json);
+            return JsonSerializer.Deserialize<AntiforgeryTokens>(json) !;
         }
 
         /// <summary>

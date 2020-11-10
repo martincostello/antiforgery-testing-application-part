@@ -42,7 +42,7 @@ namespace TodoApp
                 ["text"] = "Buy cheese",
             };
 
-            using var content = new FormUrlEncodedContent(form);
+            using var content = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string?, string?>>)form);
 
             // Act - Create a new item
             using var response = await httpClient.PostAsync("home/additem", content);
@@ -88,7 +88,7 @@ namespace TodoApp
             };
 
             // Act - Create a new item
-            using var content = new FormUrlEncodedContent(form);
+            using var content = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string?, string?>>)form);
             using var response = await httpClient.PostAsync("home/additem", content);
 
             // Assert - The item was created
@@ -145,7 +145,7 @@ namespace TodoApp
             response.EnsureSuccessStatusCode();
 
             // Arrange - Get the new item's Id
-            string id = response.Headers.Location.Segments.Last();
+            string id = response.Headers.Location!.Segments.Last();
 
             // Act - Get the item
             TodoItemModel? item = await client.GetAsync(id);
