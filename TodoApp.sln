@@ -21,7 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		stylecop.json = stylecop.json
 		TodoApp.ruleset = TodoApp.ruleset
-		update-dotnet-sdk.ps1 = update-dotnet-sdk.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{16757E02-43CA-497C-A82B-D4C494187C8D}"
