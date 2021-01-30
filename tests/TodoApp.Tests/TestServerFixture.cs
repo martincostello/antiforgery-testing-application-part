@@ -18,7 +18,7 @@ namespace TodoApp
     /// <summary>
     /// A class representing a factory for creating instances of the application.
     /// </summary>
-    public class TestServerFixture : WebApplicationFactory<Startup>
+    public class TestServerFixture : WebApplicationFactory<Startup>, ITestOutputHelperAccessor
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TestServerFixture"/> class.
@@ -35,6 +35,9 @@ namespace TodoApp
             {
             }
         }
+
+        /// <inheritdoc/>
+        public ITestOutputHelper? OutputHelper { get; set; }
 
         /// <summary>
         /// Gets a set of valid antiforgery tokens for the application as an asynchronous operation.
@@ -63,24 +66,11 @@ namespace TodoApp
             return JsonSerializer.Deserialize<AntiforgeryTokens>(json) !;
         }
 
-        /// <summary>
-        /// Clears the current <see cref="ITestOutputHelper"/>.
-        /// </summary>
-        public virtual void ClearOutputHelper()
-            => Server.Services.GetRequiredService<ITestOutputHelperAccessor>().OutputHelper = null;
-
-        /// <summary>
-        /// Sets the <see cref="ITestOutputHelper"/> to use.
-        /// </summary>
-        /// <param name="value">The <see cref="ITestOutputHelper"/> to use.</param>
-        public virtual void SetOutputHelper(ITestOutputHelper value)
-            => Server.Services.GetRequiredService<ITestOutputHelperAccessor>().OutputHelper = value;
-
         /// <inheritdoc />
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureAntiforgeryTokenResource()
-                   .ConfigureLogging((loggingBuilder) => loggingBuilder.ClearProviders().AddXUnit());
+                   .ConfigureLogging((loggingBuilder) => loggingBuilder.ClearProviders().AddXUnit(this));
         }
     }
 }

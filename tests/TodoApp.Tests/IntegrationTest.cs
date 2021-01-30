@@ -26,7 +26,7 @@ namespace TodoApp
         protected IntegrationTest(TestServerFixture fixture, ITestOutputHelper outputHelper)
         {
             Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-            Fixture.SetOutputHelper(outputHelper);
+            Fixture.OutputHelper = outputHelper;
         }
 
         /// <summary>
@@ -62,7 +62,10 @@ namespace TodoApp
             {
                 if (disposing)
                 {
-                    Fixture?.ClearOutputHelper();
+                    if (Fixture is not null)
+                    {
+                        Fixture.OutputHelper = null;
+                    }
                 }
 
                 _disposed = true;
