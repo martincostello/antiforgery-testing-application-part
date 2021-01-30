@@ -3,7 +3,7 @@
 
 using System;
 using System.Net.Http;
-using System.Text.Json;
+using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using MartinCostello.Logging.XUnit;
@@ -57,13 +57,12 @@ namespace TodoApp
             CancellationToken cancellationToken = default)
         {
             using var httpClient = httpClientFactory?.Invoke() ?? CreateClient();
-            using var response = await httpClient.GetAsync(AntiforgeryTokenController.GetTokensUri, cancellationToken).ConfigureAwait(false);
 
-            string json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+            var tokens = await httpClient
+                .GetFromJsonAsync<AntiforgeryTokens>(AntiforgeryTokenController.GetTokensUri, cancellationToken)
+                .ConfigureAwait(false);
 
-            response.EnsureSuccessStatusCode();
-
-            return JsonSerializer.Deserialize<AntiforgeryTokens>(json) !;
+            return tokens!;
         }
 
         /// <inheritdoc />
