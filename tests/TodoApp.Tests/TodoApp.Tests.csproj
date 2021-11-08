@@ -3,7 +3,7 @@
     <IsPackable>false</IsPackable>
     <NoWarn>CA1303;CA1707;CA1711;CA2007;CA2234;SA1600;$(NoWarn)</NoWarn>
     <RootNamespace>TodoApp</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
