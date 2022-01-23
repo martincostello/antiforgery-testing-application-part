@@ -25,11 +25,6 @@ namespace TodoApp
             ClientOptions.AllowAutoRedirect = false;
             ClientOptions.BaseAddress = new Uri("https://localhost");
             ClientOptions.HandleCookies = true;
-
-            // HACK Force HTTP server startup
-            using (CreateDefaultClient())
-            {
-            }
         }
 
         /// <inheritdoc/>

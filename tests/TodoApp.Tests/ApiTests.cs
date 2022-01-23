@@ -38,7 +38,7 @@ namespace TodoApp
                 ["text"] = "Buy cheese",
             };
 
-            using var content = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string?, string?>>)form);
+            using var content = new FormUrlEncodedContent(form);
 
             // Act - Create a new item
             using var response = await httpClient.PostAsync("home/additem", content);
@@ -84,7 +84,7 @@ namespace TodoApp
             };
 
             // Act - Create a new item
-            using var content = new FormUrlEncodedContent((IEnumerable<KeyValuePair<string?, string?>>)form);
+            using var content = new FormUrlEncodedContent(form);
             using var response = await httpClient.PostAsync("home/additem", content);
 
             // Assert - The item was created
@@ -141,14 +141,15 @@ namespace TodoApp
             response.EnsureSuccessStatusCode();
 
             // Arrange - Get the new item's Id
-            string id = response.Headers.Location!.Segments.Last();
+            response.Headers.Location.ShouldNotBeNull();
+            string id = response.Headers.Location.Segments.Last();
 
             // Act - Get the item
             TodoItemModel? item = await client.GetAsync(id);
 
             // Assert - Validate the item was created correctly
             item.ShouldNotBeNull();
-            item!.Id.ShouldBe(id);
+            item.Id.ShouldBe(id);
             item.IsCompleted.ShouldBeFalse();
             item.LastUpdated.ShouldNotBeNull();
             item.Text.ShouldBe(text);
@@ -160,7 +161,7 @@ namespace TodoApp
             item = await client.GetAsync(id);
 
             item.ShouldNotBeNull();
-            item!.Id.ShouldBe(id);
+            item.Id.ShouldBe(id);
             item.Text.ShouldBe(text);
             item.IsCompleted.ShouldBeTrue();
 
@@ -174,7 +175,7 @@ namespace TodoApp
             item = items.Items.Last();
 
             item.ShouldNotBeNull();
-            item!.Id.ShouldBe(id);
+            item.Id.ShouldBe(id);
             item.Text.ShouldBe(text);
             item.IsCompleted.ShouldBeTrue();
             item.LastUpdated.ShouldNotBeNull();
