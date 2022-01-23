@@ -6,37 +6,36 @@ using NodaTime;
 using TodoApp.Data;
 using TodoApp.Services;
 
-namespace TodoApp
+namespace TodoApp;
+
+public class Startup
 {
-    public class Startup
+    public void ConfigureServices(IServiceCollection services)
     {
-        public void ConfigureServices(IServiceCollection services)
+        services.AddSingleton<IClock>((_) => SystemClock.Instance);
+        services.AddScoped<ITodoRepository, TodoRepository>();
+        services.AddScoped<ITodoService, TodoService>();
+
+        services.AddControllersWithViews();
+
+        services.AddDbContext<TodoContext>((builder) => builder.UseInMemoryDatabase(databaseName: "TodoApp"));
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
+    {
+        if (environment.IsDevelopment())
         {
-            services.AddSingleton<IClock>((_) => SystemClock.Instance);
-            services.AddScoped<ITodoRepository, TodoRepository>();
-            services.AddScoped<ITodoService, TodoService>();
-
-            services.AddControllersWithViews();
-
-            services.AddDbContext<TodoContext>((builder) => builder.UseInMemoryDatabase(databaseName: "TodoApp"));
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
-        {
-            if (environment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseRouting();
-            app.UseEndpoints((endpoints) => endpoints.MapDefaultControllerRoute());
-        }
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseEndpoints((endpoints) => endpoints.MapDefaultControllerRoute());
     }
 }

@@ -4,24 +4,23 @@
 using Refit;
 using TodoApp.Models;
 
-namespace TodoApp
+namespace TodoApp;
+
+[Headers("Content-Type: application/json")]
+public interface ITodoClient
 {
-    [Headers("Content-Type: application/json")]
-    public interface ITodoClient
-    {
-        [Post("/api/items")]
-        Task<HttpResponseMessage> AddAsync([Body(BodySerializationMethod.Serialized)] string text, CancellationToken cancellationToken = default);
+    [Post("/api/items")]
+    Task<HttpResponseMessage> AddAsync([Body(BodySerializationMethod.Serialized)] string text, CancellationToken cancellationToken = default);
 
-        [Post("/api/items/{id}/complete")]
-        Task CompleteAsync(string id, CancellationToken cancellationToken = default);
+    [Post("/api/items/{id}/complete")]
+    Task CompleteAsync(string id, CancellationToken cancellationToken = default);
 
-        [Delete("/api/items/{id}")]
-        Task DeleteAsync(string id, CancellationToken cancellationToken = default);
+    [Delete("/api/items/{id}")]
+    Task DeleteAsync(string id, CancellationToken cancellationToken = default);
 
-        [Get("/api/items")]
-        Task<TodoListViewModel> GetAsync(CancellationToken cancellationToken = default);
+    [Get("/api/items")]
+    Task<TodoListViewModel> GetAsync(CancellationToken cancellationToken = default);
 
-        [Get("/api/items/{id}")]
-        Task<TodoItemModel?> GetAsync(string id, CancellationToken cancellationToken = default);
-    }
+    [Get("/api/items/{id}")]
+    Task<TodoItemModel?> GetAsync(string id, CancellationToken cancellationToken = default);
 }
