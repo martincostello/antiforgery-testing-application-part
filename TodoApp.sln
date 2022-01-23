@@ -57,6 +57,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp", "src\TodoApp\Todo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.Tests", "tests\TodoApp.Tests\TodoApp.Tests.csproj", "{F105DDD0-F061-43E9-94D8-3DD23771CC8A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".devcontainer", ".devcontainer", "{DC922B38-AE42-41C1-8666-E84C3B94C9ED}"
+	ProjectSection(SolutionItems) = preProject
+		.devcontainer\devcontainer.json = .devcontainer\devcontainer.json
+		.devcontainer\Dockerfile = .devcontainer\Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +88,7 @@ Global
 		{AAC320F3-C7F1-43D6-9560-FEA503AB66E1} = {6534D094-B61A-436E-8A50-72BBE9512D7C}
 		{226EED13-9AD3-4F24-B8E1-1623F4EF247B} = {CFDFAA9D-F0BA-4E96-BBD9-5710093A41C2}
 		{F105DDD0-F061-43E9-94D8-3DD23771CC8A} = {F729958A-AB1B-4722-8CE3-2F64B66EF70B}
+		{DC922B38-AE42-41C1-8666-E84C3B94C9ED} = {6534D094-B61A-436E-8A50-72BBE9512D7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB9D41E4-C9FD-49CC-9196-31D59B9A4157}
