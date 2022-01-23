@@ -10,7 +10,7 @@ An example application that demonstrates using [ASP.NET Core Application Parts](
 
 To avoid the danger of having unsafe code that returns valid CSRF tokens in the application itself, instead we can use Application Parts to inject additional functionality into the server at runtime when running integration tests using [`WebApplicationFactory<TEntryPoint>`](https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests "Integration tests in ASP.NET Core").
 
-The test project contains the [`AntiforgeryTokenController`](https://github.com/martincostello/antiforgery-testing-application-part/blob/main/tests/TodoApp.Tests/AntiforgeryTokenController.cs). This contains an [HTTP GET resource](https://github.com/martincostello/antiforgery-testing-application-part/blob/f8985fe1bbaa800cf73bc62bb85949c1c0a8a698/tests/TodoApp.Tests/AntiforgeryTokenController.cs#L39-L65) that uses the Antiforgery features to return a JSON payload containing valid CSRF tokens and the relevant cookie/form/header names to validate requests:
+The test project contains the [`AntiforgeryTokenController`](https://github.com/martincostello/antiforgery-testing-application-part/blob/main/tests/TodoApp.Tests/AntiforgeryTokenController.cs). This contains an [HTTP GET resource](https://github.com/martincostello/antiforgery-testing-application-part/blob/bb5a005c4defb83eeb858565ea5eb83effdf8d37/tests/TodoApp.Tests/AntiforgeryTokenController.cs#L39-L58) that uses the Antiforgery features to return a JSON payload containing valid CSRF tokens and the relevant cookie/form/header names to validate requests:
 
 ```csharp
 public IActionResult GetAntiforgeryTokens(
@@ -32,7 +32,7 @@ public IActionResult GetAntiforgeryTokens(
 }
 ```
 
-This is then configured as an Application Part by the [`ConfigureAntiforgeryTokenResource()`](https://github.com/martincostello/antiforgery-testing-application-part/blob/f8985fe1bbaa800cf73bc62bb85949c1c0a8a698/tests/TodoApp.Tests/IWebHostBuilderExtensions.cs#L26-L39) method, which is [registered with the test server](https://github.com/martincostello/antiforgery-testing-application-part/blob/f8985fe1bbaa800cf73bc62bb85949c1c0a8a698/tests/TodoApp.Tests/TestServerFixture.cs#L82):
+This is then configured as an Application Part by the [`ConfigureAntiforgeryTokenResource()`](https://github.com/martincostello/antiforgery-testing-application-part/blob/bb5a005c4defb83eeb858565ea5eb83effdf8d37/tests/TodoApp.Tests/IWebHostBuilderExtensions.cs#L25-L35) method, which is [registered with the test server](https://github.com/martincostello/antiforgery-testing-application-part/blob/bb5a005c4defb83eeb858565ea5eb83effdf8d37/tests/TodoApp.Tests/TestServerFixture.cs#L62):
 
 ```csharp
 protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -41,7 +41,7 @@ protected override void ConfigureWebHost(IWebHostBuilder builder)
 }
 ```
 
-This then allows tests to use the [`GetAntiforgeryTokensAsync()`](https://github.com/martincostello/antiforgery-testing-application-part/blob/f8985fe1bbaa800cf73bc62bb85949c1c0a8a698/tests/TodoApp.Tests/TestServerFixture.cs#L52-L64) to perform an HTTP GET to the application to obtain valid CSRF tokens to use:
+This then allows tests to use the [`GetAntiforgeryTokensAsync()`](https://github.com/martincostello/antiforgery-testing-application-part/blob/bb5a005c4defb83eeb858565ea5eb83effdf8d37/tests/TodoApp.Tests/TestServerFixture.cs#L46-L57) to perform an HTTP GET to the application to obtain valid CSRF tokens to use:
 
 ```csharp
 public async Task<AntiforgeryTokens> GetAntiforgeryTokensAsync()
