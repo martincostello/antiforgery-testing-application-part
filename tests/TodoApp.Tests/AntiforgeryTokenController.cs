@@ -40,15 +40,8 @@ namespace TodoApp
             [FromServices] IAntiforgery antiforgery,
             [FromServices] IOptions<AntiforgeryOptions> options)
         {
-            if (antiforgery == null)
-            {
-                throw new ArgumentNullException(nameof(antiforgery));
-            }
-
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            ArgumentNullException.ThrowIfNull(antiforgery);
+            ArgumentNullException.ThrowIfNull(options);
 
             AntiforgeryTokenSet tokens = antiforgery.GetTokens(HttpContext);
 
