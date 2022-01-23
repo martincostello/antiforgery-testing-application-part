@@ -49,9 +49,9 @@ public class TestServerFixture : WebApplicationFactory<Program>, ITestOutputHelp
     {
         using var httpClient = httpClientFactory?.Invoke() ?? CreateClient();
 
-        var tokens = await httpClient
-            .GetFromJsonAsync<AntiforgeryTokens>(AntiforgeryTokenController.GetTokensUri, cancellationToken)
-            .ConfigureAwait(false);
+        var tokens = await httpClient.GetFromJsonAsync<AntiforgeryTokens>(
+            AntiforgeryTokenController.GetTokensUri,
+            cancellationToken);
 
         return tokens!;
     }
