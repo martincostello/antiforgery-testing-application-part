@@ -1,6 +1,6 @@
 # ASP.NET Core Application Part For Testing Anti-forgery Protected Resources
 
-[![Build status](https://github.com/martincostello/antiforgery-testing-application-part/workflows/build/badge.svg?branch=main&event=push)](https://github.com/martincostello/antiforgery-testing-application-part/actions?query=workflow%3Abuild+branch%3Amain+event%3Apush)
+[![Build status](https://github.com/martincostello/antiforgery-testing-application-part/workflows/build/badge.svg?branch=main&event=push)](https://github.com/martincostello/antiforgery-testing-application-part/actions?query=workflow%3Abuild+branch%3Amain+event%3Apush) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/martincostello/antiforgery-testing-application-part)
 
 ## Introduction
 
@@ -100,7 +100,7 @@ This project is licensed under the [Apache 2.0](http://www.apache.org/licenses/L
 
 ## Building and Testing
 
-Compiling the application yourself requires Git and the [.NET Core SDK](https://www.microsoft.com/net/download/core "Download the .NET Core SDK") to be installed.
+Compiling the application yourself requires Git and the [.NET SDK](https://www.microsoft.com/net/download/core "Download the .NET SDK") to be installed.
 
 To build and test the application locally from a terminal/command-line, run the following set of commands:
 
