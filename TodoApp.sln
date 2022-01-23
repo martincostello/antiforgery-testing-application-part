@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F729958A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6534D094-B61A-436E-8A50-72BBE9512D7C}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		.vsconfig = .vsconfig
@@ -46,8 +47,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".vscode", ".vscode", "{AAC320F3-C7F1-43D6-9560-FEA503AB66E1}"
 	ProjectSection(SolutionItems) = preProject
-		.vscode\launch.json = .vscode\launch.json
 		.vscode\extensions.json = .vscode\extensions.json
+		.vscode\launch.json = .vscode\launch.json
 		.vscode\tasks.json = .vscode\tasks.json
 	EndProjectSection
 EndProject
