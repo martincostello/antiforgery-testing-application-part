@@ -49,6 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".vscode", ".vscode", "{AAC3
 	ProjectSection(SolutionItems) = preProject
 		.vscode\extensions.json = .vscode\extensions.json
 		.vscode\launch.json = .vscode\launch.json
+		.vscode\settings.json = .vscode\settings.json
 		.vscode\tasks.json = .vscode\tasks.json
 	EndProjectSection
 EndProject
