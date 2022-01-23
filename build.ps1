@@ -20,7 +20,7 @@ $ProgressPreference = "SilentlyContinue"
 $solutionPath = Split-Path $MyInvocation.MyCommand.Definition
 $solutionFile = Join-Path $solutionPath "TodoApp.sln"
 $sdkFile = Join-Path $solutionPath "global.json"
-$testProject = Join-Path $solutionPath "tests\TodoApp.Tests\TodoApp.Tests.csproj"
+$testProject = Join-Path $solutionPath "tests" "TodoApp.Tests" "TodoApp.Tests.csproj"
 
 $dotnetVersion = (Get-Content $sdkFile | Out-String | ConvertFrom-Json).sdk.version
 
@@ -51,7 +51,7 @@ else {
 if ($installDotNetSdk -eq $true) {
 
     $env:DOTNET_INSTALL_DIR = Join-Path "$(Convert-Path "$PSScriptRoot")" ".dotnetcli"
-    $sdkPath = Join-Path $env:DOTNET_INSTALL_DIR "sdk\$dotnetVersion"
+    $sdkPath = Join-Path $env:DOTNET_INSTALL_DIR "sdk" "$dotnetVersion"
 
     if (!(Test-Path $sdkPath)) {
         if (!(Test-Path $env:DOTNET_INSTALL_DIR)) {
