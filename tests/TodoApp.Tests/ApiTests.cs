@@ -58,7 +58,9 @@ namespace TodoApp
             using var response = await client.AddAsync("Buy tomatoes");
             response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
-            (await Assert.ThrowsAsync<ApiException>(() => client.CompleteAsync("my-id"))).StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+            // Act and Assert
+            var exception = await Assert.ThrowsAsync<ApiException>(() => client.CompleteAsync("my-id"));
+            exception.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
         }
 
         [Fact]
