@@ -24,10 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </exception>
         public static IWebHostBuilder ConfigureAntiforgeryTokenResource(this IWebHostBuilder builder)
         {
-            if (builder == null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
+            ArgumentNullException.ThrowIfNull(builder);
 
             return builder.ConfigureServices((services) =>
             {
