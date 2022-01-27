@@ -99,7 +99,14 @@ function DotNetBuild {
 function DotNetTest {
     param([string]$Project)
 
-    & $dotnet test $Project --output $OutputPath
+    $additionalArgs = @()
+
+    if (![string]::IsNullOrEmpty($env:GITHUB_SHA)) {
+        $additionalArgs += "--logger"
+        $additionalArgs += "GitHubActions;report-warnings=false"
+    }
+
+    & $dotnet test $Project --output $OutputPath --configuration $Configuration $additionalArgs
 
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet test failed with exit code $LASTEXITCODE"
