@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="coverlet.msbuild" Version="3.1.1" />
     <PackageVersion Include="GitHubActionsTestLogger" Version="1.2.0" />
     <PackageVersion Include="Humanizer" Version="2.14.1" />
     <PackageVersion Include="MartinCostello.Logging.XUnit" Version="0.2.0" />
@@ -17,7 +16,6 @@
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.3" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="coverlet.msbuild" PrivateAssets="All" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
     <PackageReference Include="StyleCop.Analyzers" PrivateAssets="All" />
   </ItemGroup>
