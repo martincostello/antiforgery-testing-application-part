@@ -1,6 +1,6 @@
 # ASP.NET Core Application Part For Testing Anti-forgery Protected Resources
 
-[![Build status](https://github.com/martincostello/antiforgery-testing-application-part/workflows/build/badge.svg?branch=main&event=push)](https://github.com/martincostello/antiforgery-testing-application-part/actions?query=workflow%3Abuild+branch%3Amain+event%3Apush) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/martincostello/antiforgery-testing-application-part)
+[![Build status](https://github.com/martincostello/antiforgery-testing-application-part/workflows/build/badge.svg?branch=main&event=push)](https://github.com/martincostello/antiforgery-testing-application-part/actions?query=workflow%3Abuild+branch%3Amain+event%3Apush)
 
 ## Introduction
 
