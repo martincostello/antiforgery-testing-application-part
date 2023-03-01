@@ -16,16 +16,14 @@ public class ApiController : Controller
         _service = service;
     }
 
-    [HttpGet]
-    [Route("api/items")]
+    [HttpGet("api/items")]
     public async Task<IActionResult> GetItems(CancellationToken cancellationToken = default)
     {
         TodoListViewModel model = await _service.GetListAsync(cancellationToken);
         return Json(model);
     }
 
-    [HttpGet]
-    [Route("api/items/{id}", Name = nameof(GetItem))]
+    [HttpGet("api/items/{id}", Name = nameof(GetItem))]
     public async Task<IActionResult> GetItem([FromRoute] string id, CancellationToken cancellationToken = default)
     {
         TodoItemModel? model = await _service.GetAsync(id, cancellationToken);
@@ -38,8 +36,7 @@ public class ApiController : Controller
         return Json(model);
     }
 
-    [HttpPost]
-    [Route("api/items")]
+    [HttpPost("api/items")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddItem([FromBody] string text, CancellationToken cancellationToken = default)
     {
@@ -53,8 +50,7 @@ public class ApiController : Controller
         return CreatedAtRoute(nameof(GetItem), new { id }, new { id });
     }
 
-    [HttpPost]
-    [Route("api/items/{id}/complete")]
+    [HttpPost("api/items/{id}/complete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CompleteItem([FromRoute] string id, CancellationToken cancellationToken = default)
     {
@@ -78,8 +74,7 @@ public class ApiController : Controller
         return NoContent();
     }
 
-    [HttpDelete]
-    [Route("api/items/{id}")]
+    [HttpDelete("api/items/{id}")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteItem([FromRoute] string id, CancellationToken cancellationToken = default)
     {
