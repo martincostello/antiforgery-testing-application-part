@@ -7,6 +7,5 @@
   <ItemGroup>
     <PackageReference Include="Humanizer" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
-    <PackageReference Include="NodaTime" />
   </ItemGroup>
 </Project>
