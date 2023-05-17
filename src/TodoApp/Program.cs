@@ -9,7 +9,7 @@ using TodoApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<TimeProvider>((_) => TimeProvider.System);
+builder.Services.AddSingleton(TimeProvider.System);
 
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
