@@ -4,13 +4,12 @@
 #pragma warning disable CA1852
 
 using Microsoft.EntityFrameworkCore;
-using NodaTime;
 using TodoApp.Data;
 using TodoApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IClock>((_) => SystemClock.Instance);
+builder.Services.AddSingleton<TimeProvider>((_) => TimeProvider.System);
 
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
