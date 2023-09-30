@@ -14,18 +14,13 @@ namespace TodoApp;
 /// <summary>
 /// A class containing tests for the TodoApp's API.
 /// </summary>
-public class ApiTests : IntegrationTest
+/// <remarks>
+/// Initializes a new instance of the <see cref="ApiTests"/> class.
+/// </remarks>
+/// <param name="fixture">The fixture to use.</param>
+/// <param name="outputHelper">The test output helper to use.</param>
+public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper) : IntegrationTest(fixture, outputHelper)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ApiTests"/> class.
-    /// </summary>
-    /// <param name="fixture">The fixture to use.</param>
-    /// <param name="outputHelper">The test output helper to use.</param>
-    public ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
-        : base(fixture, outputHelper)
-    {
-    }
-
     [Fact]
     public async Task Cannot_Create_Todo_Item_With_Html_Form_Without_Csrf_Parameter()
     {

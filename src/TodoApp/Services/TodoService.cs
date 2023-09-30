@@ -10,23 +10,13 @@ namespace TodoApp.Services;
 /// <summary>
 /// A class representing the class for managing TODO items. This class cannot be inherited.
 /// </summary>
-public sealed class TodoService : ITodoService
+/// <param name="repository">The <see cref="ITodoRepository"/> to use.</param>
+public sealed class TodoService(ITodoRepository repository) : ITodoService
 {
-    private readonly ITodoRepository _repository;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TodoService"/> class.
-    /// </summary>
-    /// <param name="repository">The <see cref="ITodoRepository"/> to use.</param>
-    public TodoService(ITodoRepository repository)
-    {
-        _repository = repository;
-    }
-
     /// <inheritdoc />
     public async Task<string> AddItemAsync(string text, CancellationToken cancellationToken)
     {
-        TodoItem item = await _repository.AddItemAsync(text, cancellationToken);
+        TodoItem item = await repository.AddItemAsync(text, cancellationToken);
 
         return item.Id.ToString();
     }
@@ -34,19 +24,19 @@ public sealed class TodoService : ITodoService
     /// <inheritdoc />
     public async Task<bool?> CompleteItemAsync(string id, CancellationToken cancellationToken)
     {
-        return await _repository.CompleteItemAsync(new Guid(id), cancellationToken);
+        return await repository.CompleteItemAsync(new Guid(id), cancellationToken);
     }
 
     /// <inheritdoc />
     public async Task<bool> DeleteItemAsync(string id, CancellationToken cancellationToken)
     {
-        return await _repository.DeleteItemAsync(new Guid(id), cancellationToken);
+        return await repository.DeleteItemAsync(new Guid(id), cancellationToken);
     }
 
     /// <inheritdoc />
     public async Task<TodoListViewModel> GetListAsync(CancellationToken cancellationToken)
     {
-        IList<TodoItem> items = await _repository.GetItemsAsync(cancellationToken);
+        IList<TodoItem> items = await repository.GetItemsAsync(cancellationToken);
 
         var result = new TodoListViewModel();
 
@@ -61,9 +51,9 @@ public sealed class TodoService : ITodoService
     /// <inheritdoc />
     public async Task<TodoItemModel?> GetAsync(string id, CancellationToken cancellationToken)
     {
-        TodoItem? item = await _repository.GetItemAsync(new Guid(id), cancellationToken);
+        TodoItem? item = await repository.GetItemAsync(new Guid(id), cancellationToken);
 
-        if (item == null)
+        if (item is null)
         {
             return null;
         }
