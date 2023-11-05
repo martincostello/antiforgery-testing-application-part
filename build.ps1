@@ -4,8 +4,6 @@
 #Requires -Version 7
 
 param(
-    [Parameter(Mandatory = $false)][string] $Configuration = "Release",
-    [Parameter(Mandatory = $false)][string] $VersionSuffix = "",
     [Parameter(Mandatory = $false)][string] $OutputPath = "",
     [Parameter(Mandatory = $false)][switch] $SkipTests
 )
@@ -14,6 +12,7 @@ param(
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = "true"
 $env:NUGET_XMLDOC_MODE = "skip"
 
+$Configuration = "Release"
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
@@ -85,12 +84,8 @@ if ($installDotNetSdk -eq $true) {
 function DotNetBuild {
     param([string]$Project)
 
-    if ($VersionSuffix) {
-        & $dotnet build $Project --configuration $Configuration --version-suffix "$VersionSuffix"
-    }
-    else {
-        & $dotnet build $Project --configuration $Configuration
-    }
+    & $dotnet build $Project --tl
+
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet build failed with exit code $LASTEXITCODE"
     }
@@ -106,7 +101,7 @@ function DotNetTest {
         $additionalArgs += "GitHubActions;report-warnings=false"
     }
 
-    & $dotnet test $Project --output $OutputPath --configuration $Configuration $additionalArgs
+    & $dotnet test $Project --output $OutputPath --configuration $Configuration --tl $additionalArgs
 
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet test failed with exit code $LASTEXITCODE"
