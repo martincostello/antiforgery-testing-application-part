@@ -47,7 +47,7 @@ public interface ITodoService
     Task<bool> DeleteItemAsync(string id, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Returns the TODO item with the specfied Id as an asynchronous operation.
+    /// Returns the TODO item with the specified Id as an asynchronous operation.
     /// </summary>
     /// <param name="id">The id of the item to retrieve.</param>
     /// <param name="cancellationToken">The cancellation token to use.</param>

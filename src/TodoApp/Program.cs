@@ -1,16 +1,13 @@
 ﻿// Copyright (c) Martin Costello, 2020. All rights reserved.
 // Licensed under the Apache 2.0 license. See the LICENSE file in the project root for full license information.
 
-#pragma warning disable CA1852
-
 using Microsoft.EntityFrameworkCore;
-using NodaTime;
 using TodoApp.Data;
 using TodoApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IClock>((_) => SystemClock.Instance);
+builder.Services.AddSingleton(TimeProvider.System);
 
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 

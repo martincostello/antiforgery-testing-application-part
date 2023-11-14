@@ -7,26 +7,19 @@ using TodoApp.Services;
 
 namespace TodoApp.Controllers;
 
-public class ApiController : Controller
+public class ApiController(ITodoService service) : Controller
 {
-    private readonly ITodoService _service;
-
-    public ApiController(ITodoService service)
-    {
-        _service = service;
-    }
-
     [HttpGet("api/items")]
     public async Task<IActionResult> GetItems(CancellationToken cancellationToken = default)
     {
-        TodoListViewModel model = await _service.GetListAsync(cancellationToken);
+        TodoListViewModel model = await service.GetListAsync(cancellationToken);
         return Json(model);
     }
 
     [HttpGet("api/items/{id}", Name = nameof(GetItem))]
     public async Task<IActionResult> GetItem([FromRoute] string id, CancellationToken cancellationToken = default)
     {
-        TodoItemModel? model = await _service.GetAsync(id, cancellationToken);
+        TodoItemModel? model = await service.GetAsync(id, cancellationToken);
 
         if (model == null)
         {
@@ -45,7 +38,7 @@ public class ApiController : Controller
             return BadRequest();
         }
 
-        string id = await _service.AddItemAsync(text, cancellationToken);
+        string id = await service.AddItemAsync(text, cancellationToken);
 
         return CreatedAtRoute(nameof(GetItem), new { id }, new { id });
     }
@@ -59,9 +52,9 @@ public class ApiController : Controller
             return BadRequest();
         }
 
-        bool? result = await _service.CompleteItemAsync(id, cancellationToken);
+        bool? result = await service.CompleteItemAsync(id, cancellationToken);
 
-        if (result == null)
+        if (result is null)
         {
             return NotFound();
         }
@@ -83,7 +76,7 @@ public class ApiController : Controller
             return BadRequest();
         }
 
-        if (!await _service.DeleteItemAsync(id, cancellationToken))
+        if (!await service.DeleteItemAsync(id, cancellationToken))
         {
             return NotFound();
         }
