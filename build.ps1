@@ -12,6 +12,10 @@ param(
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = "true"
 $env:NUGET_XMLDOC_MODE = "skip"
 
+if ($null -eq $env:MSBUILDTERMINALLOGGER) {
+    $env:MSBUILDTERMINALLOGGER = "auto"
+}
+
 $Configuration = "Release"
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
@@ -84,7 +88,7 @@ if ($installDotNetSdk -eq $true) {
 function DotNetBuild {
     param([string]$Project)
 
-    & $dotnet build $Project --tl
+    & $dotnet build $Project
 
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet build failed with exit code $LASTEXITCODE"
@@ -101,7 +105,7 @@ function DotNetTest {
         $additionalArgs += "GitHubActions;report-warnings=false"
     }
 
-    & $dotnet test $Project --output $OutputPath --configuration $Configuration --tl $additionalArgs
+    & $dotnet test $Project --output $OutputPath --configuration $Configuration $additionalArgs
 
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet test failed with exit code $LASTEXITCODE"
