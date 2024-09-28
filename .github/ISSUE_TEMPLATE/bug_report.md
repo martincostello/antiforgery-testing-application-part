@@ -1,30 +1,50 @@
 ---
 name: Bug report
-about: Create a bug report to help us improve the project
-title: ''
+about: Create a bug report to help us improve this project
 labels: bug
-assignees: ''
-
 ---
 
-**Describe the bug**
-_A clear and concise description of what the bug is._
+<!-- markdownlint-disable MD041 -->
+### Describe the bug
 
-**Steps To reproduce**
-_A concise, repeatable, example of how to reproduce the issue._
+<!--
+A clear and concise description of what the bug is.
+-->
 
-**Expected behaviour**
-_A clear and concise description of what you expected to happen._
+### Steps To reproduce
 
-**Actual behaviour**
-_A clear and concise description of what actually happened. If an exception occurred, please include a stack trace if available._
+<!--
+A concise, repeatable, example of how to reproduce the issue.
+-->
 
-**Screenshots**
+### Expected behaviour
+
+<!--
+A clear and concise description of what you expected to happen.
+-->
+
+### Actual behaviour
+
+<!--
+A clear and concise description of what actually happened. If an exception occurred, please include a stack trace if available.
+-->
+
+### Screenshots
+
+<!--
 If applicable, add screenshots to help explain your problem.
+-->
 
-**System information:**
- - OS: [e.g. Windows 10]
+### System information
+
+<!--
+ - OS: [e.g. Windows 11]
+ - Application Version [e.g. Git commit SHA]
  - .NET version (e.g. output from `dotnet --info`)
+-->
 
-**Additional context**
+### Additional context
+
+<!--
 Add any other context about the problem here.
+-->
