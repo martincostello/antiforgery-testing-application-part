@@ -5,6 +5,7 @@
   <PropertyGroup>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <Authors>martin_costello</Authors>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)TodoApp.ruleset</CodeAnalysisRuleSet>
     <Company>https://github.com/martincostello/antiforgery-testing-application-part</Company>
     <ContinuousIntegrationBuild Condition=" '$(CI)' != '' ">true</ContinuousIntegrationBuild>
