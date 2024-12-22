@@ -2,14 +2,13 @@
 // Licensed under the Apache 2.0 license. See the LICENSE file in the project root for full license information.
 
 using Xunit;
-using Xunit.Abstractions;
 
 namespace TodoApp;
 
 /// <summary>
 /// The base class for integration tests.
 /// </summary>
-[Collection(TestServerCollection.Name)]
+[Collection<TestServerCollection>]
 public abstract class IntegrationTest : IDisposable
 {
     /// <summary>
