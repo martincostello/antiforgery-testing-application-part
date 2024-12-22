@@ -7,7 +7,6 @@ using Refit;
 using Shouldly;
 using TodoApp.Models;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace TodoApp;
 
@@ -19,7 +18,7 @@ namespace TodoApp;
 /// </remarks>
 /// <param name="fixture">The fixture to use.</param>
 /// <param name="outputHelper">The test output helper to use.</param>
-[Collection(TestServerCollection.Name)]
+[Collection<TestServerCollection>]
 public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper) : IntegrationTest(fixture, outputHelper)
 {
     [Fact]
@@ -37,7 +36,7 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
         using var content = new FormUrlEncodedContent(form);
 
         // Act - Create a new item
-        using var response = await httpClient.PostAsync("home/additem", content);
+        using var response = await httpClient.PostAsync("home/additem", content, TestContext.Current.CancellationToken);
 
         // Assert - The request failed due to missing CSRF tokens
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
@@ -51,11 +50,11 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
         var client = RestService.For<ITodoClient>(httpClient);
 
         // Act and Assert - All write operations fail
-        using var response = await client.AddAsync("Buy tomatoes");
+        using var response = await client.AddAsync("Buy tomatoes", TestContext.Current.CancellationToken);
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
         // Act and Assert
-        var exception = await Assert.ThrowsAsync<ApiException>(() => client.CompleteAsync("my-id"));
+        var exception = await Assert.ThrowsAsync<ApiException>(() => client.CompleteAsync("my-id", TestContext.Current.CancellationToken));
         exception.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
     }
 
@@ -63,7 +62,7 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
     public async Task Can_Create_Todo_Item_With_Html_Form()
     {
         // Arrange - Get valid CSRF tokens and parameter names from the server
-        AntiforgeryTokens tokens = await Fixture.GetAntiforgeryTokensAsync();
+        AntiforgeryTokens tokens = await Fixture.GetAntiforgeryTokensAsync(cancellationToken: TestContext.Current.CancellationToken);
 
         // Configure a handler with the CSRF cookie
         using var cookieHandler = new CookieContainerHandler();
@@ -83,7 +82,7 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
 
         // Act - Create a new item
         using var content = new FormUrlEncodedContent(form);
-        using var response = await httpClient.PostAsync("home/additem", content);
+        using var response = await httpClient.PostAsync("home/additem", content, TestContext.Current.CancellationToken);
 
         // Assert - The item was created
         response.StatusCode.ShouldBe(HttpStatusCode.Redirect);
@@ -93,7 +92,7 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
     public async Task Can_Create_Todo_Item_With_Json()
     {
         // Arrange - Get valid CSRF tokens and parameter names from the server
-        AntiforgeryTokens tokens = await Fixture.GetAntiforgeryTokensAsync();
+        AntiforgeryTokens tokens = await Fixture.GetAntiforgeryTokensAsync(cancellationToken: TestContext.Current.CancellationToken);
 
         // Configure a handler with the CSRF cookie
         using var cookieHandler = new CookieContainerHandler();
@@ -108,7 +107,7 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
         var client = RestService.For<ITodoClient>(httpClient);
 
         // Act - Create a new item
-        using var response = await client.AddAsync("Buy bread");
+        using var response = await client.AddAsync("Buy bread", TestContext.Current.CancellationToken);
 
         // Assert - The item was created
         response.IsSuccessStatusCode.ShouldBeTrue();
@@ -121,7 +120,7 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
         ITodoClient client = await CreateTodoClientAsync();
 
         // Act - Get all the items
-        TodoListViewModel items = await client.GetAsync();
+        TodoListViewModel items = await client.GetAsync(TestContext.Current.CancellationToken);
 
         // Assert - There should be no items
         items.ShouldNotBeNull();
@@ -133,7 +132,7 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
         string text = "Buy eggs";
 
         // Act - Add a new item
-        var response = await client.AddAsync(text);
+        var response = await client.AddAsync(text, TestContext.Current.CancellationToken);
 
         // Assert - An item was created
         response.EnsureSuccessStatusCode();
@@ -143,7 +142,7 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
         string id = response.Headers.Location.Segments.Last();
 
         // Act - Get the item
-        TodoItemModel? item = await client.GetAsync(id);
+        TodoItemModel? item = await client.GetAsync(id, TestContext.Current.CancellationToken);
 
         // Assert - Validate the item was created correctly
         item.ShouldNotBeNull();
@@ -153,10 +152,10 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
         item.Text.ShouldBe(text);
 
         // Act - Mark the item as being completed
-        await client.CompleteAsync(id);
+        await client.CompleteAsync(id, TestContext.Current.CancellationToken);
 
         // Assert - The item was completed
-        item = await client.GetAsync(id);
+        item = await client.GetAsync(id, TestContext.Current.CancellationToken);
 
         item.ShouldNotBeNull();
         item.Id.ShouldBe(id);
@@ -164,7 +163,7 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
         item.IsCompleted.ShouldBeTrue();
 
         // Act - Get all the items
-        items = await client.GetAsync();
+        items = await client.GetAsync(TestContext.Current.CancellationToken);
 
         // Assert - The item was completed
         items.ShouldNotBeNull();
@@ -179,16 +178,16 @@ public class ApiTests(TestServerFixture fixture, ITestOutputHelper outputHelper)
         item.LastUpdated.ShouldNotBeNull();
 
         // Act - Delete the item
-        await client.DeleteAsync(id);
+        await client.DeleteAsync(id, TestContext.Current.CancellationToken);
 
         // Assert - The item no longer exists
-        items = await client.GetAsync();
+        items = await client.GetAsync(TestContext.Current.CancellationToken);
 
         items.ShouldNotBeNull();
         items.Items.ShouldNotBeNull();
         items.Items.Count.ShouldBe(beforeCount);
 
-        var exception = await Assert.ThrowsAsync<ApiException>(() => client.GetAsync(id));
+        var exception = await Assert.ThrowsAsync<ApiException>(() => client.GetAsync(id, TestContext.Current.CancellationToken));
         exception.StatusCode.ShouldBe(HttpStatusCode.NotFound);
     }
 
