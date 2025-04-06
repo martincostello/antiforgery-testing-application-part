@@ -13,9 +13,8 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $solutionPath = $PSScriptRoot
-$solutionFile = Join-Path $solutionPath "TodoApp.sln"
+$solutionFile = Join-Path $solutionPath "TodoApp.slnx"
 $sdkFile = Join-Path $solutionPath "global.json"
-$testProject = Join-Path $solutionPath "tests" "TodoApp.Tests" "TodoApp.Tests.csproj"
 
 $dotnetVersion = (Get-Content $sdkFile | Out-String | ConvertFrom-Json).sdk.version
 
@@ -87,7 +86,7 @@ function DotNetBuild {
 }
 
 function DotNetTest {
-    param([string]$Project)
+    param()
 
     $additionalArgs = @()
 
@@ -96,7 +95,7 @@ function DotNetTest {
         $additionalArgs += "GitHubActions;report-warnings=false"
     }
 
-    & $dotnet test $Project --output $OutputPath --configuration $Configuration $additionalArgs
+    & $dotnet test --output $OutputPath --configuration $Configuration $additionalArgs
 
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet test failed with exit code $LASTEXITCODE"
@@ -108,5 +107,5 @@ DotNetBuild $solutionFile
 
 if (-Not $SkipTests) {
     Write-Host "Running tests..." -ForegroundColor Green
-    DotNetTest $testProject
+    DotNetTest
 }
