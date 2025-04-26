@@ -15,6 +15,7 @@ $ProgressPreference = "SilentlyContinue"
 $solutionPath = $PSScriptRoot
 $solutionFile = Join-Path $solutionPath "TodoApp.slnx"
 $sdkFile = Join-Path $solutionPath "global.json"
+$testProject = Join-Path $solutionPath "tests" "TodoApp.Tests" "TodoApp.Tests.csproj"
 
 $dotnetVersion = (Get-Content $sdkFile | Out-String | ConvertFrom-Json).sdk.version
 
@@ -25,7 +26,7 @@ if ($OutputPath -eq "") {
 $installDotNetSdk = $false;
 
 if (($null -eq (Get-Command "dotnet" -ErrorAction SilentlyContinue)) -and ($null -eq (Get-Command "dotnet.exe" -ErrorAction SilentlyContinue))) {
-    Write-Host "The .NET SDK is not installed."
+    Write-Output "The .NET SDK is not installed."
     $installDotNetSdk = $true
 }
 else {
@@ -37,7 +38,7 @@ else {
     }
 
     if ($installedDotNetVersion -ne $dotnetVersion) {
-        Write-Host "The required version of the .NET SDK is not installed. Expected $dotnetVersion."
+        Write-Output "The required version of the .NET SDK is not installed. Expected $dotnetVersion."
         $installDotNetSdk = $true
     }
 }
@@ -47,12 +48,12 @@ if ($installDotNetSdk) {
     ${env:DOTNET_INSTALL_DIR} = Join-Path $solutionPath ".dotnet"
     $sdkPath = Join-Path ${env:DOTNET_INSTALL_DIR} "sdk" $dotnetVersion
 
-    if (!(Test-Path $sdkPath)) {
-        if (!(Test-Path ${env:DOTNET_INSTALL_DIR})) {
+    if (-Not (Test-Path $sdkPath)) {
+        if (-Not (Test-Path ${env:DOTNET_INSTALL_DIR})) {
             mkdir ${env:DOTNET_INSTALL_DIR} | Out-Null
         }
         [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor "Tls12"
-        if (($PSVersionTable.PSVersion.Major -ge 6) -And !$IsWindows) {
+        if (($PSVersionTable.PSVersion.Major -ge 6) -And (-Not $IsWindows)) {
             $installScript = Join-Path ${env:DOTNET_INSTALL_DIR} "install.sh"
             Invoke-WebRequest "https://dot.net/v1/dotnet-install.sh" -OutFile $installScript -UseBasicParsing
             chmod +x $installScript
@@ -86,26 +87,25 @@ function DotNetBuild {
 }
 
 function DotNetTest {
-    param()
+    param([string]$Project)
 
     $additionalArgs = @()
 
-    if (![string]::IsNullOrEmpty($env:GITHUB_SHA)) {
-        $additionalArgs += "--logger"
-        $additionalArgs += "GitHubActions;report-warnings=false"
+    if (-Not [string]::IsNullOrEmpty($env:GITHUB_SHA)) {
+        $additionalArgs += "--logger:GitHubActions;report-warnings=false"
     }
 
-    & $dotnet test --output $OutputPath --configuration $Configuration $additionalArgs
+    & $dotnet test $Project --output $OutputPath --configuration $Configuration $additionalArgs
 
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet test failed with exit code $LASTEXITCODE"
     }
 }
 
-Write-Host "Building solution..." -ForegroundColor Green
+Write-Output "Building solution..."
 DotNetBuild $solutionFile
 
 if (-Not $SkipTests) {
-    Write-Host "Running tests..." -ForegroundColor Green
-    DotNetTest
+    Write-Output "Running tests..."
+    DotNetTest $testProject
 }
