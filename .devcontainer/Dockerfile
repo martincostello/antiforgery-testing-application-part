@@ -1,5 +1,4 @@
-ARG VARIANT="8.0"
-FROM mcr.microsoft.com/vscode/devcontainers/dotnet
+FROM mcr.microsoft.com/vscode/devcontainers/dotnet:latest
 
 ARG INSTALL_NODE="false"
 ARG NODE_VERSION="lts/*"
